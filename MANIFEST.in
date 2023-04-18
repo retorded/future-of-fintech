@@ -1,0 +1,4 @@
+include empower/schema.sql
+graft empower/static
+graft empower/templates
+global-exclude *.pyc

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages]
+find = {}  # Scan the project directory with the default parameters
+
+[project]
+name = "empower"
+version= "1.0.0"
+authors = [
+    {name = "Tord Nytun", email = "tordnytun@hotmail.com"},
+]
+description = "My package description"
+readme = "README.md"
+dependencies = [
+    "flask"
+]
+classifiers = [
+    "Framework :: Flask",
+    "Programming Language :: Python :: 3",
+]
+
+
+dynamic = ["version"]
