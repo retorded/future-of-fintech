@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Who we are{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <!-- >
+  short text about us, what we do, how we can help you
+  Button to take you to the "transformer"
+  </!-->
+
+  <a href="{{ url_for('index') }}">Start your transformation</a>
+
+{% endblock %}
