@@ -12,4 +12,10 @@
 
   <a href="{{ url_for('index') }}">Start your transformation</a>
 
+  {% if g.db_populated %}
+    <h3>This is a h3 and the database has been populated </h3>
+  {% else %}
+    <h3>This is a h3 and the database has NOT been populated </h3>
+  {% endif %}
+
 {% endblock %}
