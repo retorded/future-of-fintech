@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
+from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from empower.db import get_db
 
 
@@ -18,7 +18,7 @@ def consumption():
             error = 'Oops! We need your personal power consumption to give you the best deal for you!'
 
         if error is None:
-            return redirect(url_for('providers'))
+            return redirect(url_for('transformer.providers'))
 
         flash(error)
 
@@ -26,6 +26,14 @@ def consumption():
 
 
 # TODO Creating the view for showing the user what the cost of each provided is
+def get_all_plans():
+    db = get_db()
+    all_plans = db.execute(
+        'SELECT * FROM plans'
+    ).fetchall()
+
+    return all_plans
+
 @bp.route('/providers', methods=('GET', 'POST'))
 def providers():
-    return None
+    return render_template('transformer/providers.html')
