@@ -11,9 +11,8 @@ def get_db():
     # connection is stored and reused
     if 'db' not in g:
         # establishes a connection to the file pointed at by DATABASE config key. File doesnt exist until db has been initalized
+        # current_app points to Flask app handling request (get_db is called when app has been created, therefore we can use it)
         g.db = sqlite3.connect(
-
-            # current_app points to Flask app handling request (get_db is called when app has been created, therefore we can use it)
             current_app.config['DATABASE'],
             detect_types=sqlite3.PARSE_DECLTYPES
         )
@@ -62,8 +61,8 @@ def populate_db():
                     price = "NULL"
 
             db.execute(
-                "INSERT INTO plans (id, provider, pricingModel, monthlyFee, price, period) VALUES (?, ?, ?, ?, ?)",
-                (planId, provider, pricingModel, monthlyFee, price, period),
+                "INSERT INTO plans (provider, pricingModel, monthlyFee, price, period) VALUES (?, ?, ?, ?, ?)",
+                (provider, pricingModel, monthlyFee, price, period),
             )
             db.commit()
     else:
@@ -79,8 +78,6 @@ def init_db():
 
     # here we call the help function populate_db that will populate the database
     populate_db()
-
-
 
 
 # init-db command that calls init-db
