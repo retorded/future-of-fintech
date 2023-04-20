@@ -14,15 +14,15 @@ version= "1.0.0"
 authors = [
     {name = "Tord Nytun", email = "tordnytun@hotmail.com"},
 ]
-description = "My package description"
+description = "A small package to deploy a flask app"
 readme = "README.md"
+requires-python = ">=3.9"
 dependencies = [
-    "flask"
+    "flask~=2.2.2"
 ]
-classifiers = [
-    "Framework :: Flask",
-    "Programming Language :: Python :: 3",
-]
+[project.urls]
+"Homepage" = "https://github.com/retorded/future-of-fintech"
 
 
-dynamic = ["version"]
+
+# dynamic = ["version"]
