@@ -34,8 +34,17 @@ pip install empower-*.*.*.tar.gz
 # or 
 pip install empower-*.*.*-py3-none-any.whl
 ```
-will install the packae as a python module.
+will install the package as a python module.
 
+To initialize the database
+```sh
+flask --app empower init-db
+```
+
+Then run the app with flask
+```sh
+flask --app empower run
+```
 
 ### Uninstall
 Simply run
