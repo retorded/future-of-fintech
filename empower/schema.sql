@@ -1,13 +1,17 @@
-DROP TABLE IF EXISTS providers;
+DROP TABLE IF EXISTS plans;
 
 
-CREATE TABLE providers (
+CREATE TABLE plans (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   provider TEXT UNIQUE NOT NULL,
   pricingModel TEXT NOT NULL,
-  variablePrice FLOAT NOT NULL,
-  fixedPricePeriod INT NOT NULL
+  monthlyFee REAL,
+  price REAL NOT NULL,
+  period INT
+
 );
+
+
 
 
 
