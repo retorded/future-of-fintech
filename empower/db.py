@@ -30,41 +30,49 @@ def close_db(e=None):
         db.close()
 
 
-def populate_db():
+def get_row_tuple_from_json(plan):
+    priceKeys = ["spotPrice", "variablePrice", "fixedPrice"]
+    periodKeys = ["fixedPricePeriod", "variablePricePeriod"]
+
+    if plan:
+        provider = plan['name']
+        pricingModel = plan['pricingModel']
+        monthlyFee = plan['monthlyFee']
+        for k in priceKeys:
+            if k in plan:
+                price = plan[k]
+        for p in periodKeys:
+            if p in plan:
+                period = plan[p]
+            else:
+                period = "NULL"
+    else:
+        return "NULL", "NULL", "NULL", "NULL", "NULL"
+
+    return (provider, pricingModel, monthlyFee, price, period)
+
+
+def update_plans_table():
+    # This function should check if the data in the table "plans" is updated to the API for providers
+    # if not, populate and/or make changes
     db = get_db()
 
-    # here we populate the "plans" table with data from an API
     response_api = requests.get('https://future-of-fintech-v2023.vercel.app/api/providers')
 
     if response_api.status_code == 200:
         plans = json.loads(response_api.text)
 
-        priceKeys = ["spotPrice", "variablePrice", "fixedPrice"]
-        periodKeys = ["fixedPricePeriod", "variablePricePeriod"]
+        for plan in plans:
+            # a tuple containing record values to input into the database
+            rowTuple = get_row_tuple_from_json(plan)
 
-        # Looping through all the plans
-        for i in range(0, len(plans)):
-            planId = i,
-            provider = plans[i]['name']
-            pricingModel = plans[i]['pricingModel']
-            monthlyFee = plans[i]['monthlyFee']
-            for k in priceKeys:
-                if k in plans[i]:
-                    price = plans[i][k]
-                else:
-                    # NULL is not an allowed datatype as per the schema.sql for price col
-                    price = "NULL"
-            for p in periodKeys:
-                if p in plans[i]:
-                    period = plans[i][p]
-                else:
-                    price = "NULL"
-
+            # we now perform an insert in such a way that it ignores provider plans already in the database
             db.execute(
-                "INSERT INTO plans (provider, pricingModel, monthlyFee, price, period) VALUES (?, ?, ?, ?, ?)",
-                (provider, pricingModel, monthlyFee, price, period),
+                "INSERT OR IGNORE INTO plans (provider, pricingModel, monthlyFee, price, period) VALUES (?, ?, ?, ?, ?)",
+                rowTuple
             )
             db.commit()
+
     else:
         click.echo('Could not fetch provider data from API')
 
@@ -75,9 +83,6 @@ def init_db():
     # opens the file (with SQL) that is relative to the empower package
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
-
-    # here we call the help function populate_db that will populate the database
-    populate_db()
 
 
 # init-db command that calls init-db
@@ -92,7 +97,6 @@ def init_db_command():
 
 # for registering the functions with the application
 def init_app(app):
-
     #  cleans up after returning response
     app.teardown_appcontext(close_db)
 
