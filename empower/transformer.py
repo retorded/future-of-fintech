@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
-from empower import db
+from empower.db import get_db
 
 
 bp = Blueprint('transformer', __name__, url_prefix='/transformer')
@@ -12,7 +12,6 @@ def consumption():
         consumer = request.form['consumer']
 
         # TODO fetch consumer data from db / API
-        db.get_db()
         error = None
 
         if consumer is None:
