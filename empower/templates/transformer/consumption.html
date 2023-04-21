@@ -5,9 +5,15 @@
 {% endblock %}
 
 {% block content %}
+  <h3>Let us transform your power usage</h3>
+
   <form method="post">
-    <label for="consumer">What type of power user are you?</label>
-    <input name="consumer" id="consumer" required>
+
+    <label for="name">Name?</label>
+    <label for="name">Address?</label>
+    <input name="name" placeholder="Name" id="name" required value="{{ request.form['name'] }}">
+    <input name="address" placeholder="Address" id="address" required value="{{ request.form['address'] }}">
+
     <input type="submit" value="Transform!">
   </form>
 {% endblock %}
