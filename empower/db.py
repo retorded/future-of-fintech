@@ -4,6 +4,7 @@ import json
 
 import click
 from flask import current_app, g
+import empower.api_helper as api_helper
 
 
 def get_db():
@@ -30,51 +31,30 @@ def close_db(e=None):
         db.close()
 
 
-def get_row_tuple_from_json(plan):
-    priceKeys = ["spotPrice", "variablePrice", "fixedPrice"]
-    periodKeys = ["fixedPricePeriod", "variablePricePeriod"]
-
-    if plan:
-        provider = plan['name']
-        pricingModel = plan['pricingModel']
-        monthlyFee = plan['monthlyFee']
-        for k in priceKeys:
-            if k in plan:
-                price = plan[k]
-        for p in periodKeys:
-            if p in plan:
-                period = plan[p]
-            else:
-                period = "NULL"
-    else:
-        return "NULL", "NULL", "NULL", "NULL", "NULL"
-
-    return (provider, pricingModel, monthlyFee, price, period)
-
-
 def update_plans_table():
-    # This function should check if the data in the table "plans" is updated to the API for providers
-    # if not, populate and/or make changes
     db = get_db()
 
-    response_api = requests.get('https://future-of-fintech-v2023.vercel.app/api/providers')
+    plans = api_helper.get_plans_from_api('https://future-of-fintech-v2023.vercel.app/api/providers')
 
-    if response_api.status_code == 200:
-        plans = json.loads(response_api.text)
+    for plan in plans:
+        db.execute(
+            "INSERT OR IGNORE INTO plans (provider, pricingModel, monthlyFee, price, period) VALUES (?, ?, ?, ?, ?)",
+            plan
+        )
+        db.commit()
 
-        for plan in plans:
-            # a tuple containing record values to input into the database
-            rowTuple = get_row_tuple_from_json(plan)
 
-            # we now perform an insert in such a way that it ignores provider plans already in the database
-            db.execute(
-                "INSERT OR IGNORE INTO plans (provider, pricingModel, monthlyFee, price, period) VALUES (?, ?, ?, ?, ?)",
-                rowTuple
-            )
-            db.commit()
+def update_consumption_table():
+    db = get_db()
 
-    else:
-        click.echo('Could not fetch provider data from API')
+    consumption = api_helper.get_consumption_from_api("https://future-of-fintech-v2023.vercel.app/api/consumption")
+
+    for cons in consumption:
+        db.execute(
+            "INSERT OR IGNORE INTO consumption (from_dt, to_dt, consumption, unit) VALUES (?, ?, ?, ?)",
+            cons
+        )
+        db.commit()
 
 
 def init_db():

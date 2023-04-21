@@ -10,6 +10,14 @@ CREATE TABLE plans (
   UNIQUE(provider, pricingModel)
 );
 
+CREATE TABLE consumption (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    from_dt TIMESTAMP,
+    to_dt TIMESTAMP,
+    consumption REAL,
+    unit TEXT
+);
+
 
 
 
