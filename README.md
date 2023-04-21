@@ -4,6 +4,13 @@ This projects aim is to create a python package that can be deployed to a
 production server and be used for comparing power provider pricing
 based on power usage input
 
+Want to know more? Keep up with the development with the dedicated trello board!
+[Trello board](https://trello.com/invite/b/05b6QJpn/ATTIb4c521403918a7d8d30e2f71dbb7a1a46A4900F9/empower)
+
+View the mindmap created at the start of the project
+[Mindmap](https://atlas.mindmup.com/2023/04/6a85d050e00b11eda5ea1b2a97c72641/empower_mindmap/index.html)
+
+
 ## Table of content
   * [License](#license)
   * [Installation](#installation)
