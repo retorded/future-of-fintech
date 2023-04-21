@@ -2,13 +2,12 @@
 
 This projects aim is to create a python package that can be deployed to a 
 production server and be used for comparing power provider pricing
-based on power usage input
+based on consumer power usage input
 
-Want to know more? Keep up with the development with the dedicated [trello board](https://trello.com/invite/b/05b6QJpn/ATTIb4c521403918a7d8d30e2f71dbb7a1a46A4900F9/empower)!
+Want to get involved? Keep up with the development with the dedicated [trello board](https://trello.com/invite/b/05b6QJpn/ATTIb4c521403918a7d8d30e2f71dbb7a1a46A4900F9/empower)!
+View the [mindmap](https://atlas.mindmup.com/2023/04/6a85d050e00b11eda5ea1b2a97c72641/empower_mindmap/index.html) created at the start of the project and check out the
+[ER diagram](https://drawsql.app/teams/tords-teeem/diagrams/future-of-fintech) of the database
 
-View the [mindmap](https://atlas.mindmup.com/2023/04/6a85d050e00b11eda5ea1b2a97c72641/empower_mindmap/index.html) created at the start of the project
-
-View the WIP [ER diagram](https://drawsql.app/teams/tords-teeem/diagrams/future-of-fintech) of the database
 
 
 ## Table of content
@@ -58,4 +57,9 @@ Simply run
 ```sh
 pip uninstall empower
 ```
-and the package, along with the script, will be removed.
+and the package will be removed
+
+
+### Credit
+
+The development of this project has to a large degree been based on the pallets [flask tutorial](https://flask.palletsprojects.com/en/2.2.x/tutorial/) ([github](https://github.com/pallets/flask/))
