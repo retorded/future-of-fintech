@@ -1,5 +1,7 @@
 # empower - a flask app for power provider price comparison
 
+NOTE: please see the project [trello board](https://trello.com/invite/b/05b6QJpn/ATTIb4c521403918a7d8d30e2f71dbb7a1a46A4900F9/empower) for an overview of the current project state
+
 This projects aim is to create a python package that can be deployed to a 
 production server and be used for comparing power provider pricing
 based on consumer power usage input
