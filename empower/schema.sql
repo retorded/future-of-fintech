@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS plans;
+DROP TABLE IF EXISTS consumption;
+DROP TABLE IF EXISTS consumers;
 
 CREATE TABLE plans (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -12,11 +14,20 @@ CREATE TABLE plans (
 
 CREATE TABLE consumption (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    consumer_id INTEGER NOT NULL,
     from_dt TIMESTAMP,
     to_dt TIMESTAMP,
     consumption REAL,
-    unit TEXT
+    unit TEXT,
+    FOREIGN KEY (consumer_id) REFERENCES consumer (id)
 );
+
+CREATE TABLE consumers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    address TEXT
+);
+
 
 
 

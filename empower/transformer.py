@@ -1,23 +1,28 @@
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for
-from empower.db import get_db
+from empower.db import get_db, update_consumption_table
 
 
 bp = Blueprint('transformer', __name__, url_prefix='/transformer')
 
 
-# TODO Creating the view for the user to select/upload/access consumption data EITHER via API or stored locally
 @bp.route('/consumption', methods=('GET', 'POST'))
 def consumption():
     if request.method == 'POST':
-        consumer = request.form['consumer']
-
-        # TODO fetch consumer data from db / API
+        name = request.form['name']
+        address = request.form['address']
+        db = get_db()
         error = None
 
-        if consumer is None:
-            error = 'Oops! We need your personal power consumption to give you the best deal for you!'
+        if not name:
+            error = 'Name is required.'
+        elif not address:
+            error = 'Address is required.'
 
         if error is None:
+
+            consumer = {'name': name, 'address': address}
+
+            update_consumption_table(consumer)
             return redirect(url_for('transformer.providers'))
 
         flash(error)

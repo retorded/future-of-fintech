@@ -44,17 +44,32 @@ def update_plans_table():
         db.commit()
 
 
-def update_consumption_table():
+def update_consumption_table(consumer):
     db = get_db()
 
     consumption = api_helper.get_consumption_from_api("https://future-of-fintech-v2023.vercel.app/api/consumption")
 
-    for cons in consumption:
+    # Inserting the consumer data input in the consumer table
+    db.execute(
+        "INSERT INTO consumers (name, address) VALUES (?, ?)",
+        (consumer['name'], consumer['address'])
+    )
+    db.commit()
+
+    # Inserting the consumer consumption into the consumption table
+    for consump in consumption:
+
+        entry = (consumer['name'],) + consump
+
         db.execute(
-            "INSERT OR IGNORE INTO consumption (from_dt, to_dt, consumption, unit) VALUES (?, ?, ?, ?)",
-            cons
+            "INSERT OR IGNORE INTO consumption (consumer_id, from_dt, to_dt, consumption, unit) VALUES (?, ?, ?, ?, ?)",
+            entry
         )
         db.commit()
+
+
+
+
 
 
 def init_db():
