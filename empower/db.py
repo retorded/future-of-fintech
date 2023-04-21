@@ -1,7 +1,4 @@
 import sqlite3
-import requests
-import json
-
 import click
 from flask import current_app, g
 import empower.api_helper as api_helper

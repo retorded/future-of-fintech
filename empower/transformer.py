@@ -1,7 +1,6 @@
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from empower.db import get_db, update_consumption_table
 
-
 bp = Blueprint('transformer', __name__, url_prefix='/transformer')
 
 
@@ -19,7 +18,6 @@ def consumption():
             error = 'Address is required.'
 
         if error is None:
-
             consumer = {'name': name, 'address': address}
 
             update_consumption_table(consumer)
@@ -38,6 +36,7 @@ def get_all_plans():
     ).fetchall()
 
     return all_plans
+
 
 @bp.route('/providers', methods=('GET', 'POST'))
 def providers():
