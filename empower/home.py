@@ -7,6 +7,6 @@ bp = Blueprint('home', __name__)
 @bp.route('/')
 def index():
     db.update_plans_table()
-    db.update_consumption_table()
+
     return render_template('home/index.html')
 
